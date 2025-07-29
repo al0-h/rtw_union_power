@@ -349,3 +349,7 @@ TSWLatexianTemp*
 Thumbs.db
 .env
 .vscode/
+
+# --- DATA FOLDERS ---
+data/CPS_ORG_Data/
+data/CPS_ORG_dta/
