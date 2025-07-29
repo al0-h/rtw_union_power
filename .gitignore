@@ -1,0 +1,54 @@
+# Created by https://www.toptal.com/developers/gitignore/api/stata
+# Edit at https://www.toptal.com/developers/gitignore?templates=stata
+
+### Stata ###
+# .gitignore file for git projects containing Stata files
+# Commercial statistical software: http://www.stata.com
+
+# Stata dataset and output files
+*.dta
+*.gph
+*.log
+*.smcl
+*.stpr
+*.stsem
+
+# Graphic export files from Stata
+# Stata command graph export: http://www.stata.com/manuals14/g-2graphexport.pdf
+#
+# You may add graphic export files to your .gitignore. However you should be
+# aware that this will exclude all image files from this main directory
+# and subdirectories.
+# *.ps
+# *.eps
+# *.wmf
+# *.emf
+# *.pdf
+# *.png
+# *.tif
+
+# End of https://www.toptal.com/developers/gitignore/api/stata
+
+### Folders that should never be versioned
+data/raw/
+data/processed/
+
+### Other data formats you might create
+*.csv
+*.parquet
+*.feather
+
+### LaTeX build artifacts (if your paper lives in the same repo)
+*.aux *.bbl *.blg *.fls *.fdb_latexmk *.log *.out *.synctex.gz *.toc
+
+### R / Python helper clutter
+.Rhistory
+.Rproj.user/
+__pycache__/
+.ipynb_checkpoints/
+
+### OS / editor noise
+.DS_Store
+Thumbs.db
+.env
+.vscode/
