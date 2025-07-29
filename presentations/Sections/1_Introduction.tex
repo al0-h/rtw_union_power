@@ -1,0 +1,142 @@
+% Begin paper with a few paragraphs that:
+%    Introduce Right-to-Work (RTW) laws and their significance
+
+%    Motivate your focus on union membership as a binary outcome
+%    Explain the empirical challenge: staggered treatment + binary outcomes
+
+
+%    State your dual contribution:
+
+%       Empirical: evaluating RTW’s effects on union membership
+
+%       Methodological: adapting Callaway–Sant’Anna DiD to binary outcomes
+
+% Preview  methods and findings
+
+\section{Introduction}
+
+\boxed{\text{Opening: Union decline } $+$ \text{ rising employer concentration} $+$ \text{ RTW changes}}
+
+Union membership in the United States has declined dramatically over the past serval decades, dropping from roughly 35\% of private sector--sector workers in the 1950
+In 1983, one in five U.S. workers belonged to a union; by 2024, union members made up just 9.9\% of the workforce.  
+%https://www.bls.gov/news.release/pdf/union2.pdf (paragraph 1)
+This decline of organized labor has been linked to rising wage inequality (Western and Rosenfeld 2011) and a redistribution of economics gains from labor to capital (Stansbury and Summers 2020).
+% Unions, Norms, and the Rise in U.S. Wage Inequality Bruce Western & Rosenfeld 2011
+% The Declining Worker Power Hypothesis: An explanation for the recent evolution of the American economy Anna Stansbury & Lawrence H. Summers 2020
+Additionally the erosion of union coverage explains a significant share (20--30\%) of the growth in wage inequality among U.S. men in recent decades (Western and Rosenfeld 2011).
+% 20 percent is only union wage ; 30 is union and non-union wages
+% Unions, Norms, and the Rise in U.S. Wage Inequality Bruce Western & Rosenfeld 2011
+Unions historically boost workers' wages (10-20 log points union wage premium has been fairly consistent (Farber et al. 2021)) and compress the wage distribution by setting pay standards that spill over to nonunion workers (Western and Rosenfeld 2011).
+% UNIONS AND INEQUALITY OVER THE TWENTIETH CENTURY: NEW EVIDENCE FROM SURVEY DATA Henry S. Farber Daniel Herbst Ilyana Kuziemko Suresh Naidu
+The decline in unionization from about one-third of private-sector male workers in the 1970s to under 8\% by the 2000s has therefore weakened an important institutional force for wage growth and equity (Fortin et al. 2022).
+%RIGHT-TO-WORK LAWS, UNIONIZATION, AND WAGE SETTING Nicole Fortin Thomas Lemieux Neil Lloyd
+
+Concurrently, economic research and policy attention have turned to employer market power in the labor market. A growing literature documents that many local labor markets are far from perfectly competitive, often dominated by a few large employers [[i.e. oligopsony or monopsonistic competition]] which can suppress wages below competitive levels.
+% Strong Employers and Weak Employees: How Does Employer Concentration Affect Wages?* Efraim Benmelech Nittai K. Bergman Hyunseob Kim
+
+For example, Azar et al. (2022) find that the average Herfindahl-Hirschman Index\footnote{Herfindahl-Hirschman Index is a measure of market concentration, indicating how much power a few firms hold in a particular industry} (HHI) of employer concentration in U.S. labor markets (defined by occupation and commuting zone) is over 3,100 – well above antitrust thresholds – and that higher concentration is associated with significantly lower posted wages
+% Page 4 paragraph 4 also includes info on current monopoly regulation 
+% LABOR MARKET CONCENTRATION José Azar Ioana Marinescu Marshall I. Steinbaum et al.
+In their estimates, moving from a relatively competitive labor market (25th percentile HHI) to a highly concentrated market (75th percentile HHI) leads to about a 17\% decline in wages.
+Other studies using administrative data echo these findings: increased local employer concentration causally reduces workers’ earnings and raises pay inequality.
+% Labor Market Concentration, Earnings Inequality, and Earnings Mobility Kevin Rinz U.S. Census Bureau 
+Notably, union presence emerges as a mitigating force in these dynamics. 
+Qiu and Sojourner (2019) show that the negative impact of labor market concentration on compensation is smaller in areas or industries with higher unionization rates.
+%Labor-Market Concentration and Labor Compensation Yue Qiu Aaron Sojourner
+Similarly, Benmelech, Bergman, and Kim (2020) find that the wage-suppressing effect of employer concentration is much stronger in markets with low union density, suggesting that unions counteract employer wage-setting power.
+% Strong Employers and Weak Employees: How Does Employer Concentration Affect Wages?* Efraim Benmelech Nittai K. Bergman Hyunseob Kim 2020
+These patterns align with classic labor economics theory: when employers have outsized monopsony power, collective bargaining can push wages closer to workers’ marginal productivity, potentially even improving efficiency by reducing deadweight losses from under-employment.
+% Labor-Market Concentration and Labor Compensation Yue Qiu Aaron Sojourner
+In contrast, when unions weaken or disappear, monopsonistic employers may gain greater ability to hold down pay, especially in isolated or highly concentrated labor markets.
+
+Against this backdrop, Right-to-Work (RTW) laws present a compelling “natural experiment” to study the interaction of union power and employer monopsony.
+RTW laws prohibit unions from requiring membership or dues payment as a condition of employment, thereby weakening unions’ financial base and bargaining clout by introducing a “free-rider” problem.
+Proponents argue RTW makes states more attractive to businesses, while opponents contend that RTW’s true purpose is to undercut unions and lower labor’s bargaining power.
+Since 2012, a wave of states—Indiana (2012), Michigan (2012), Wisconsin (2015), West Virginia (2016), Kentucky (2017), and briefly Missouri (2017)—have enacted RTW legislation after a long period of little change in RTW policy.
+This staggered adoption of RTW laws in the post-Great Recession era offers a strong setting for causal analysis.
+By comparing states that adopted RTW to those that did not, before and after adoption, we can isolate the impact of weakening unions on various labor market outcomes.
+Moreover, by examining heterogeneous effects across labor markets, we can test the central hypothesis that RTW-induced declines in union power will lead to larger drops in wages and labor’s share of income in markets where employers have greater monopsony power (i.e. in high-concentration labor markets).
+In other words, if unions particularly benefit workers in concentrated (or collusive) labor markets, then removing unions’ strength via RTW should hurt workers most in those contexts, manifesting as bigger wage declines, lower labor share, and potentially worse welfare outcomes for workers.
+
+There is strong motivation for this study from both a scientific and policy perspective. 
+First, I contribute to understanding the causes of the long-run decline in labor’s share of national income and stagnant wage growth for typical workers.
+Recent research points to declining worker bargaining power due to decreasing unions, eroded labor standards, and increased labor market concentration as a key explanation for these trends (Stansbury and Summers 2020).
+RTW laws offer a policy-induced shock to worker power, allowing us to observe what happens to wage outcomes when bargaining power is legislatively reduced.
+Second, I contribute to the current monopsony debates in labor markets.
+Evidence of explicit collusion among employers such as “no-poaching”\footnote{"no-poaching" refers where franchisees within the same franchise system (or sometimes even between different franchises and their franchisor) agree not to hire or solicit each other's employees} agreements that have been startlingly common (one study found that 58\% of major franchise chains had no-poach clauses restraining worker hiring) and increasing concentration have raised antitrust alarms in recent years (Krueger and Ashenfelter 2022). 
+% Theory and Evidence on Employer Collusion in the Franchise Sector Alan B. Krueger, Orley Ashenfelter
+%##NOTES: not sure how technical I should keep it here and if I should add a sentence about what no poaching is krueger made it seem like everyone know it? I didn't
+This paper will examine whether the presence (or absence) of unions alters how such employer market power translates into wage suppression.
+If weakening unions disproportionately harms workers in concentrated industries or rural areas with few employers, it would underscore the role of collective bargaining as a countervailing force to monopsony, much as traditional antitrust or minimum wage policies aim to be.
+Finally, this study will inform the evaluation of RTW laws’ welfare consequences. 
+% "this paper" feels like the "Therefore" for research paper writing
+Beyond wages and employment, RTW-induced changes in unionization could affect worker well-being through channels like fringe benefits, job security, income inequality, and local economic health.
+For instance, unions often secure better health insurance and pensions for workers; if RTW diminishes union coverage, one might see declines in benefit coverage as a side effect (Qiu and Sojourner 2023)
+%Labor-Market Concentration and Labor Compensation∗ Yue Qiu Aaron Sojourner
+Additionally, if wages fall, there may be ripple effects on consumer spending and community welfare.
+By analyzing welfare proxies (such as the incidence of employer-provided health insurance, poverty rates, or government assistance uptake), we will explore whether weakening unions under RTW has broader social costs or benefits.
+
+
+\begin{center}
+    [[Open to the main research question(s):]]
+    % Subject to changed based on how long the paper is can move some stuff that isn't as insightful into the abstract
+\end{center}
+
+%% doesn't have to stay here just directly states the "theme" of what topics this question can explore
+In summary, this paper will leverage newly available variation in labor policy to provide novel evidence on a classic question in labor economics: what happens to workers when unions lose power? 
+I bring a modern empirical approach harnessing staggered Difference-in-Differences methods and insights from the monopsony literature to assess the causal effect of RTW laws on wages, labor’s share of output, unionization, and related welfare outcomes. 
+By explicitly testing for differential impacts in high vs. low employer concentration environments, this paper will also shed light on the interaction between institutional worker power (unions) and market structure. 
+The results will have important implications for how labor market regulations and antitrust enforcement might improve (or harm) worker welfare in an era of declining unionization.
+
+The major research question is:
+\emph{Do unions lower wage rents from oligopsony? Does weakening them (through RTW) reduce wages and labor share when employer power is high?}
+
+\begin{center}
+    [[Add in road map for the rest of the paper ]]
+\end{center}
+
+\section{Policy Background and Motivation}
+
+[[Here goes information relating to what the RTW laws are and how they were passed]]
+
+[[Maps of HHI gradient for all of the RTW states]]
+
+[[Possible implications for labor markets and worker powers]]
+
+[[Possible implications of monopoly and further evidence]]
+
+
+\subsection{Simple Exploratory Model - Calculus based}
+
+We are going to model our economy as
+\[
+\mathcal{E}=\left( I, J,\left\{U_i\right\}_{i \in I},\left\{Y_j\right\}_{j \in J}, e\right)
+\]
+
+
+
+
+
+
+[[If done: Insert NK-DMP model with oligopsony w/ union counterfactual ]]
+
+More can be added as to how the union is modeled.
+John Dunlop modeled unions as firms that seeks to maximize the utility of its members
+Arthur Ross modeled unions as political institutions emphasizing the broader social and political context in which unions operate, rather than purely economic considerations. 
+The Ross view could explain deviations from the dunlop. 
+Further literature review is needed on my end to see what the consensus is currently and which is more appropriate.
+
+\section{Related Literature}
+%   Studies of RTW effects on labor market outcomes and unions
+[[Walk through previous papers: see zotero]]
+
+%   DiD methodologies: from TWFE to modern staggered DiD (C&S, Sun & Abraham)
+[[include why other papers use TWFE and how staggered DiD could remedy potential issues]]
+
+%   Gaps: application to binary outcomes and functional form issues
+[[Gaps left from cont outcome]]
+Brief peak into how difficult it would be to modify csdid for a binary outcome or other ways to model the outcomes.
+If I do add on to the econometric proof of the estimator.
+Introduce main theorems and lemmas; reference proofs in a seperate appendix
+
+

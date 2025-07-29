@@ -1,0 +1,40 @@
+\section{Methodology}
+\subsection{Review of Callaway–Sant’Anna Estimator}
+
+
+
+
+%   Briefly describe ATT(g,t), comparison groups, assumptions
+[[Introduce CS DiD and the challenges it addresses from the TWFE ]]
+
+* Issues with heterogeneity in the treatment which CS did solves 
+
+I exploit the staggered timing of state Right-to-Work (RTW) adoptions in a modern difference-in-differences framework (Callaway \& Sant'Anna) to estimate cohort and time-specific average treatment effects (ATTs).
+First, I estimate the RTW impact on union membership (first stage) and on outcomes. 
+I then form Wald-style instrumental-variables estimates—dividing the reduced-form RTW effects by the RTW-induced change in unionization—to recover the causal effect of unions for “complier” states. 
+
+[[Explain the Wald ratio and method to estimate the SEs]]
+% Delta method for now until I can find something better seems like the standard.
+
+
+
+%   Explain how it’s typically applied (with continuous or linear models)
+[[Explain how it is applied to linear and cont models]]
+
+\subsection{Alternative Estimation: Syn Staggared Diff-in-Diff}
+[[ONLY IF: the binary outcome isnt done and I have room]]
+\subsection{IF DONE: Binary Outcome Challenges and Proposed Extension}
+%   Define the estimand: ATT(g,t) for binary Y in {0,1}
+[[Explain the new estimator]]
+
+%   Discuss LPM limitations: heteroskedasticity, probability bounds
+[[Discuss assumptions and limitations]]
+
+%   Describe your solution: e.g., marginal effects from logistic regression
+
+%   Inference strategy (e.g., bootstrapped CIs)
+
+%   How it respects staggered adoption structure
+[[explain how it keeps the staggered adoption structure]]
+
+
