@@ -98,21 +98,20 @@ gen ub95c = uncov + 1.96*se_uncov
 *	  Union Membership									 *
 **********************************************************
 
-twoway /// NATIONAL average
-    (rarea ub95 lb95 year if missing(rtw_stateind), color(black%20)) ///
-    (line  unmem     year if missing(rtw_stateind), lcolor(black) lwidth(medthick)) /// RTW states
-    (rarea ub95 lb95 year if rtw_stateind==1,       color(red%20))  ///
-    (line  unmem     year if rtw_stateind==1,       lcolor(red)  lwidth(medthick)) /// Non-RTW states
-    (rarea ub95 lb95 year if rtw_stateind==0,       color(blue%20)) ///
-    (line  unmem     year if rtw_stateind==0,       lcolor(blue) lwidth(medthick)) ///
-, legend(order(4 "RTW states" 6 "Non-RTW states" 2 "All states") ///
-         position(7) ring(0)) ///
-  xscale(range(1984 2019) noextend)  ///
-  xlabel(1984(2)2019, nogrid)  ylabel(, nogrid) ///
-  ytitle("Union-membership share")   xtitle("Year") ///
-  title("Union membership with 95% CIs, 1984-2019")
-  
-	graph export "$output/UnionMemRTWNat.pdf", replace
+twoway  /* NATIONAL average
+*/	(rarea ub95 lb95 year if missing(rtw_stateind), color(black%20)) /*
+*/  (line  unmem     year if missing(rtw_stateind), lcolor(black) lwidth(medthick)) /* RTW states
+*/  (rarea ub95 lb95 year if rtw_stateind==1,       color(red%20)) /*
+*/  (line  unmem     year if rtw_stateind==1,       lcolor(red)  lwidth(medthick)) /* Non-RTW states
+*/  (rarea ub95 lb95 year if rtw_stateind==0,       color(blue%20)) /*
+*/  (line  unmem     year if rtw_stateind==0,       lcolor(blue) lwidth(medthick)) /*
+*/,	legend(order(4 "RTW states" 6 "Non-RTW states" 2 "All states") position(7) ring(0)) /*
+*/	xscale(range(1984 2019) noextend)  /*
+*/  xlabel(1984(2)2019, nogrid)  ylabel(, nogrid) /*
+*/  ytitle("Union-membership share")   xtitle("Year") /*
+*/  title("Union membership with 95% CIs, 1984-2019")
+
+graph export "$output/UnionMemRTWNat.pdf", replace
 
   
 **********************************************************
@@ -120,21 +119,20 @@ twoway /// NATIONAL average
 *	  Union Coverage									 *
 **********************************************************
 
-twoway /// NATIONAL average
-    (rarea ub95c lb95c year if missing(rtw_stateind), color(black%20)) ///
-    (line  uncov     year if missing(rtw_stateind), lcolor(black) lwidth(medthick)) /// RTW states
-    (rarea ub95c lb95c year if rtw_stateind==1,       color(red%20))  ///
-    (line  uncov     year if rtw_stateind==1,       lcolor(red)  lwidth(medthick)) /// Non-RTW states
-    (rarea ub95c lb95c year if rtw_stateind==0,       color(blue%20)) ///
-    (line  uncov     year if rtw_stateind==0,       lcolor(blue) lwidth(medthick)) ///
-, legend(order(4 "RTW states" 6 "Non-RTW states" 2 "All states") ///
-         position(7) ring(0)) ///
-  xscale(range(1984 2019) noextend)  ///
-  xlabel(1984(2)2019, nogrid)  ylabel(, nogrid) ///
-  ytitle("Union-coverage share")   xtitle("Year") ///
-  title("Union coverage with 95% CIs, 1984-2019")
-  
-  graph export "$output/UnionCovRTWNat.pdf", replace
+twoway /* NATIONAL average 
+*/	(rarea ub95c lb95c year if missing(rtw_stateind), color(black%20)) /*
+*/	(line  uncov     year if missing(rtw_stateind), lcolor(black) lwidth(medthick)) /* RTW states
+*/	(rarea ub95c lb95c year if rtw_stateind==1,       color(red%20))  /*
+*/	(line  uncov     year if rtw_stateind==1,       lcolor(red)  lwidth(medthick)) /* Non-RTW states 
+*/	(rarea ub95c lb95c year if rtw_stateind==0,       color(blue%20)) /*
+*/	(line  uncov     year if rtw_stateind==0,       lcolor(blue) lwidth(medthick)) /*
+*/	, legend(order(4 "RTW states" 6 "Non-RTW states" 2 "All states") position(7) ring(0)) /*
+*/	xscale(range(1984 2019) noextend)  /*
+*/	xlabel(1984(2)2019, nogrid)  ylabel(, nogrid) /*
+*/	ytitle("Union-coverage share")   xtitle("Year") /*
+*/	title("Union coverage with 95% CIs, 1984-2019")
+
+graph export "$output/UnionCovRTWNat.pdf", replace
 }
 
 
@@ -158,16 +156,16 @@ if `BEA_figures' == 1{
 	gen lb95 = Value - 1.96*Value_se
 	gen ub95 = Value + 1.96*Value_se
 		 
-	twoway /// RTW states
-    (rarea ub95 lb95 year if rtw_ind==1,       color(cranberry%20))  ///
-    (line  Value     year if rtw_ind==1,       lcolor(cranberry)  lwidth(medthick)) /// Non-RTW states
-    (rarea ub95 lb95 year if rtw_ind==0,       color(edkblue%20)) ///
-    (line  Value     year if rtw_ind==0,       lcolor(edkblue) lwidth(medthick)) ///
-, legend(order(2 "RTW states" 4 "Non-RTW states") ///
-position(6) ring(1)) xlabel(, nogrid)  ylabel(, nogrid) ///
-xscale(range(1997 2023) noextend)  xlabel(1997(6)2023, nogrid) ///
-  ytitle("Gross Operating Surplus")   xtitle("Year") ///
-  title("Gross Operating Surplus with 95% CIs, 1997-2023")
+	twoway /* RTW states 
+*/	(rarea ub95 lb95 year if rtw_ind==1,       color(cranberry%20))  /*
+*/	(line  Value     year if rtw_ind==1,       lcolor(cranberry)  lwidth(medthick)) /* Non-RTW states 
+*/	(rarea ub95 lb95 year if rtw_ind==0,       color(edkblue%20)) /*
+*/	(line  Value     year if rtw_ind==0,       lcolor(edkblue) lwidth(medthick)) /*
+*/	, legend(order(2 "RTW states" 4 "Non-RTW states") position(6) ring(1)) /*
+*/	xlabel(, nogrid)  ylabel(, nogrid) /*
+*/	xscale(range(1997 2023) noextend)  xlabel(1997(6)2023, nogrid) /*
+*/	ytitle("Gross Operating Surplus")   xtitle("Year") /*
+*/	title("Gross Operating Surplus with 95% CIs, 1997-2023")
   
   graph export "$output/temp.pdf", replace
   
@@ -207,10 +205,14 @@ replace rtw_year = 0 if missing(rtw_year)
 
 g rtw_stateind = rtw_year!=0
 
-collapse  (first) rtw_year  (sum)   pop = wt (mean) uncov unmem rtw rw  schcol [aw = wt], by(state year empl)
+g lnrw = ln(rw) if !mi(rw)
+
+collapse  (first) rtw_year  (sum)   pop = wt (mean) uncov unmem rtw rw lnrw multjob schcol [aw = wt], by(state year empl)
 
 replace rtw = 0 if rtw < .5 & rtw != 0
 replace rtw = 1 if rtw >= .5 & rtw != 0
+
+keep if empl == 1
 
 * Callaway–Sant'Anna   
 
@@ -242,15 +244,15 @@ estat simple
 estat event, window(-10 10)
 csdid_plot
 
- graph export  "$output/First_Stage.pdf",replace
+ //graph export  "$output/First_Stage.pdf",replace
 
 matrix b1 = r(table)
 scalar att_union = b1[1,1]
 scalar se_union  = b1[2,1]
 
 * ---- ATT of RTW on wages -----------------------------------------------
-csdid rw     [iw=pop], ivar(state) time(year) gvar(rtw_year) method(reg) post
-estat simple                // <-- you forgot this line
+csdid lnrw     [iw=pop], ivar(state) time(year) gvar(rtw_year) method(reg) post
+estat simple                
 matrix b2 = r(table)
 scalar att_outcome = b2[1,1]
 scalar se_outcome  = b2[2,1]   // <-- use b2, not b1

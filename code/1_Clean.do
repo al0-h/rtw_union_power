@@ -83,9 +83,12 @@ if `RTW_key' == 1{
 *********************************************
 if `Gen_Appended' == 1{
 	
+	local start_year 1979
+	local end_year	 2019
+	
 	* Download all the CPS ORG data
 	
-	forvalues y = 1979/2019 {
+	forvalues y = `start_year'/`end_year' {
 		
 		*
 		copy "https://ceprdata.s3.amazonaws.com/data/cps/data/cepr_org_`y'.zip" ///
