@@ -355,3 +355,5 @@ data/CPS_ORG_Data/
 data/CPS_ORG_dta/
 *.csv
 *.xlsx
+*.xml
+*.html
