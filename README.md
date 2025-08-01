@@ -31,3 +31,27 @@ The replication package:
 ---
 
 ## Folder Structure
+```
+├── Code/                  # Replication .do files
+│   ├── 00_Master.do
+│   ├── 01_Clean.do
+│   ├── 02_Analysis.do
+│   └── Logs/
+├── Data/                  # Raw data
+│   ├── CPS_ORG_Data/
+│   └── CPS_ORG_dta/
+├── Intm/                  # Processed data
+├── Presentations/
+│  ├── _Archive/              # Previous versions
+│  ├── Bibliography/
+│  ├── Figures/               # Final figures (.pdf, .png)
+│  ├── Formatting/
+│  │  └── Formatting Ref/         # AEJ LaTeX reference
+│  ├── Sections/
+│  └── Tables/
+├── LICENSE.txt
+├── README.txt
+└── README.md              # This file
+```
+
+
