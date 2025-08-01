@@ -37,7 +37,7 @@ The replication package:
 │   ├── 01_Clean.do
 │   ├── 02_Analysis.do
 │   └── Logs/
-├── Data/                  # Raw data
+├── Data/                  # Raw data; empty; .gitignored
 │   ├── CPS_ORG_Data/
 │   └── CPS_ORG_dta/
 ├── Intm/                  # Processed data
