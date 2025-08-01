@@ -1,0 +1,51 @@
+Right-to-Work Laws, Union Decline, and Employer Power
+Evidence from Staggered Reforms in U.S. Labor Markets
+
+Author: Alexander Leon-Hernandez
+Replication Do Files — version dated 06.31.2025
+
+------------------------------------------------------------
+TABLE OF CONTENTS
+  1. Overview
+  2. Folder Structure
+  3. Prerequisites
+  4. Quick Start
+  5. Step-by-Step Replication Guide
+  6. Expected Output
+  7. Troubleshooting
+  8. Citation
+  9. Contact
+ 10. License
+------------------------------------------------------------
+
+OVERVIEW
+This repository contains all Stata .do scripts and auxiliary materials required to reproduce the empirical results in “Right-to-Work Laws, Union Decline, and Employer Power: Evidence from Staggered Reforms in U.S. Labor Markets.”
+
+The replication package:
+  • Downloads and cleans the raw data sources.
+  • Constructs the key variables and analytic datasets.
+  • Generates all tables and figures in the paper and online appendix.
+
+------------------------------------------------------------
+FOLDER STRUCTURE
+
+Code/                  # Replication .do files
+  ├─ 00_Master.do
+  ├─ 01_Clean.do
+  ├─ 02_Analysis.do
+  └─ Logs/
+Data/                  # Raw data
+  ├─ CPS_ORG_Data/
+  └─ CPS_ORG_dta/
+Intm/                  # Processed data
+Presentations/
+  ├─ _Archive/             # Previous versions
+  ├─ Bibliography/
+  ├─ Figures/              # Final figures (.pdf, .png)
+  ├─ Formatting/
+  │   └─ Formatting Ref/   # AEJ LaTeX reference
+  ├─ Sections/
+  └─ Tables/
+LICENSE.txt
+README.txt
+README.md               # This file

@@ -24,8 +24,9 @@
 
 clear all 
 
-set scheme s2color
-graph set window fontface "Times New Roman"
+net install scheme-modern, from("https://raw.githubusercontent.com/mdroste/stata-scheme-modern/master/")
+net install grc1leg,from( http://www.stata.com/users/vwiggins/) 
+set scheme modern
 
 
 local Union_participation_Figures 1 // Generate union membership & coverage over the years
