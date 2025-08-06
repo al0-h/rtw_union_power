@@ -36,7 +36,8 @@ local BEA_figures 1 // gross operating surplus and incomes over the years
 global folder "/Users/alexanderleon-hernandez/Desktop/rtw_union_power"
 global data "$folder/data"
 global intm "$folder/intm"
-global output "$folder/output"
+global tables "$folder/Presentations/Tables"
+global figures "$folder/Presentations/Figures"
 
 cd "$folder"       
 
@@ -112,7 +113,7 @@ twoway  /* NATIONAL average
 */  ytitle("Union-membership share")   xtitle("Year") /*
 */  title("Union membership with 95% CIs, 1984-2019")
 
-graph export "$output/UnionMemRTWNat.pdf", replace
+graph export "$figures/UnionMemRTWNat.pdf", replace
 
   
 **********************************************************
@@ -133,7 +134,7 @@ twoway /* NATIONAL average
 */	ytitle("Union-coverage share")   xtitle("Year") /*
 */	title("Union coverage with 95% CIs, 1984-2019")
 
-graph export "$output/UnionCovRTWNat.pdf", replace
+graph export "$figures/UnionCovRTWNat.pdf", replace
 }
 
 
@@ -199,26 +200,256 @@ if `BEA_figures' == 1{
 
 *********************************************************************************
 
-use "$intm/Appended_CPS_ORG.dta" if   rtw_year >= 2003 & year >= 2003 , clear // 2000s onwards RTW states differ too much from pre 2000s RTW states. For consitency I'll stick to 2000s
-gen wt=round(orgwgt/12,1)
+* Top 10 unionized firms from 2003 - 2019
+use "$intm/RTW_Analysis.dta", clear
 
-replace rtw_year = 0 if missing(rtw_year)
+*---------------------------------------------------------------------
+* A.  Compute 2003 (pre-treatment) union density and sample size
+*---------------------------------------------------------------------
+//preserve
+collapse (first) rtw_year (mean) pre_union = unmem (sum) pre_pop = wt, by(ind_2d year)
 
-g rtw_stateind = rtw_year!=0
+*---------------------------------------------------------------------
+* B.  Keep private, sizeable cells & rank by union density
+*---------------------------------------------------------------------
+sort pre_union -pre_pop
+list ind_2d pre_union pre_pop in 1/15  // eyeball the top 15
 
-g lnrw = ln(rw) if !mi(rw)
+*---- pick the top 10 unionised private industries -------------------
+egen rank = rank(-pre_union)
+keep if rank <= 10
+levelsof ind_2d, local(top10)   // stores codes in `top10'
 
-collapse  (first) rtw_year  (sum)   pop = wt (mean) uncov unmem rtw rw lnrw multjob schcol [aw = wt], by(state year empl)
+restore  // back to the full panel
+
+
+keep if inlist(ind_2d ,4,10,18,23,24,29,31,40,41,51)
+
+/*-------------------------------------------------------------*
+  2 ▸ Collapse to state-year level with weights                *
+*-------------------------------------------------------------*/
+collapse (first) rtw_year (sum) pop = wt                                     ///
+         (mean) unmem rtw , ///
+         by(state year ind_2d)
+
+
+/*-------------------------------------------------------------*
+  3 ⏵ Loop over industries, run CSDID first stage, collect β   *
+*--------------------------------------------------------------*/
+
+levelsof ind_2d, local(top10)
+
+foreach k of local top10 {
+    preserve
+    keep if ind_2d == `k'
+
+    * CSDID first stage
+    csdid unmem [iw = pop], ///
+          ivar(state) time(year) gvar(rtw_year) ///
+          method(dripw) post
+
+    * --- get the ONE aggregated ATT and its s.e. -------------
+    estat simple, post              // <---- this line is essential
+	eststo model_`k'
+    
+	restore
+}
+
+use "$intm/RTW_Analysis.dta",clear
+
+collapse  (first) rtw_year  (sum) lfstat nilf pop = wt lf_pop=lf_w  unemp_pop=unemp_w (mean)  unmem rtw lnrw female college manuf      ///
+                 black foreign publicjob          ///
+				 [aw = wt], by(state year)
 
 replace rtw = 0 if rtw < .5 & rtw != 0
 replace rtw = 1 if rtw >= .5 & rtw != 0
 
-keep if empl == 1
+xtset state year
+
+
+foreach v in unemp_rate female college manuf black foreign publicjob   {
+    by state: gen L1_`v' = L.`v'
+}
+
+by state (year): gen L1_unemp = L.unemp_rate   // 1-year lag
+
+ csdid unmem [iw = pop], ///
+          ivar(state) time(year) gvar(rtw_year) ///
+          method(dripw) post
+	estat simple, post              
+	eststo model_all	  
+
+coefplot model_* , mlabels
+
+foreach m in model_4 model_10 model_18 model_23 model_24 ///
+             model_29 model_31 model_40 model_41 model_51 {
+    qui estimates restore `m'
+    di as text "`m':  |t| = " %5.2f abs(_b[ATT]/_se[ATT])
+}
+
+
+
+
+use "$intm/RTW_Analysis.dta" if ind_2d == 23,clear
+collapse  (first) rtw_year  (sum) lfstat nilf pop = wt lf_pop=lf_w  unemp_pop=unemp_w (mean)  unmem rtw lnrw female college manuf      ///
+                 black foreign publicjob          ///
+				 [aw = wt], by(state year)
+
+replace rtw = 0 if rtw < .5 & rtw != 0
+replace rtw = 1 if rtw >= .5 & rtw != 0
+
+gen unemp_rate = 100 * unemp_pop / lf_pop   if lf_pop>0
+xtset state year
+
+* keep only rows that have BOTH outcomes observed
+keep if !missing(unmem) & !missing(lnrw)
+
+
+
+* ── first stage ───────────────────────────────────────────────
+count 
+csdid unmem [iw = pop], ivar(state) time(year) gvar(rtw_year) ///
+      method(dripw) post
+estat simple, post	  
+nlcom unmem : _b[ATT],post
+est sto unmem
+	  
+
+
+* ── reduced form ──────────────────────────────────────────────
+count 
+csdid lnrw  [iw = pop], ivar(state) time(year) gvar(rtw_year) ///
+      method(dripw) post
+estat simple, post	  
+nlcom lnrw : _b[ATT],post
+est sto lnrw
+
+
+/*-----------------------------------------------------------------
+1 ▸ FIRST STAGE : RTW → union membership share
+------------------------------------------------------------------*/
+
+
+csdid  unmem [iw = pop],                                      ///
+      ivar(state) time(year) gvar(rtw_year)                   ///
+      controls(L1_unemp_rate L1_female L1_college L1_manuf    ///
+               L1_black L1_foreign  ) ///
+      method(dripw) post
+estat simple
+estat event, window(-5 10)
+csdid_plot
+
+matrix m1 = r(table)              // 1st row = coef, 2nd = s.e.
+scalar b_union  = m1[1,1]         // β̂_1st
+scalar se_union = m1[2,1]
+est store csdid_union             // keep for a results table
+
+/*-----------------------------------------------------------------
+2 ▸ REDUCED FORM : RTW → ln(real wage)
+------------------------------------------------------------------*/
+csdid  lnrw  [iw = pop],                                     ///
+      ivar(state) time(year) gvar(rtw_year)                  ///
+      controls(L1_unemp_rate L1_female L1_college L1_manuf   ///
+               L1_black L1_foreign  ) ///
+      method(dripw) post
+
+matrix m2 = r(table)
+scalar b_wage  = m2[1,1]          // β̂_RF
+scalar se_wage = m2[2,1]
+est store csdid_wage
+
+/*-----------------------------------------------------------------
+3 ▸ WALD RATIO  θ  and delta-method standard error
+   θ = β̂_RF / β̂_1st
+------------------------------------------------------------------*/
+scalar theta = b_wage / b_union
+scalar se_theta = abs(theta) * sqrt( (se_wage/b_wage)^2 ///
+                                   + (se_union/b_union)^2 )
+
+display "-------------------------------------------"
+display "Wald ratio (θ)  = " %8.4f theta
+display "Delta-method s.e. = " %8.4f se_theta
+display "z-stat = " %6.2f (theta/se_theta)
+display "-------------------------------------------"
+
+
+
+**********************************************************************
+* 5 ▸ Two-way fixed effects (reghdfe)
+**********************************************************************
+reghdfe unmem rtw                                                      ///
+        L1_unemp_rate L1_female L1_college L1_manuf L1_black L1_foreign ///
+        L1_publicjob                   ///
+        [pw = pop], absorb(state year) vce(cluster state)
+est store twfe_rich
+
+csdid unmem [iw = pop],                                                ///
+      ivar(state) time(year) gvar(rtw_year)                            ///
+      controls(L1_unemp_rate L1_female L1_college L1_manuf L1_black    ///
+               L1_foreign L1_publicjob )                                             ///
+      method(dripw) post
+estat simple
+estat event, window(-5 10)
+csdid_plot
+est store csdid_rich
+
+csdid lnrw [iw = pop],                                                ///
+      ivar(state) time(year) gvar(rtw_year)                            ///
+      controls(L1_unemp_rate L1_female L1_college L1_manuf L1_black    ///
+               L1_foreign L1_publicjob )                                             ///
+      method(dripw) post
+estat simple
+estat event, window(-5 10)
+csdid_plot
+est store csdid_rich2
+
+
+* 2  Goodman-Bacon decomposition with all three options
+bys state: egen pop_state = mean(pop)   // or max(pop) — any constant works
+
+
+bacondecomp unmem rtw [pw = pop_state],                          ///
+           ddetail                                               ///
+           stub(bacon_)                                          ///
+           gropt(title("Goodman–Bacon weights: RTW and union membership") ///
+                 note("Circles = Early v Late, Triangles = Late v Early, X's = Never v Timing") ///
+                 legend(rows(1) pos(6)))
+
+* 3  Inspect negative weights 
+matrix list e(wt)          // inspect visually
+
+* Automatic count
+local neg 0
+forval j = 1/`=colsof(e(wt))' {
+    if (e(wt)[1,`j'] < 0) local ++neg
+}
+di "Negative weights: `neg'"
+
+
+* csdid 
+csdid unmem  [iw = pop], ///
+      ivar(state) time(year) gvar(rtw_year)  ///
+      controls(L1_unemp /* add your lagged demos if used */)  ///
+      method(dripw)  post
+estat simple
+// plot the first stage
+estat event, window(-10 10)
+csdid_plot
+
+
+
+
+
+
 
 * Callaway–Sant'Anna   
 
 //keep if ind_2d == 40 & empl == 1
 xtset state year
+
+foreach v in female college manuf age unemp_rate {
+    by state (year): gen L1_`v' = L.`v'
+}
 
 /*
 **PLACEBO YEAR VAR****
@@ -267,6 +498,8 @@ scalar se_wald = abs(wald)*sqrt( (se_outcome/att_outcome)^2 ///
 di wald
 di se_wald
 
+
+reghdfe unmem rtw [aw = pop], absorb(state year) vce(cluster state)
 
 
 use "/Users/alexanderleon-hernandez/Downloads/cps_00005.dta"
