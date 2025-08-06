@@ -73,8 +73,8 @@ Logs are saved to Code/Logs/.
 
 | Script                | Output                         | Where saved                           |
 | --------------------- | ------------------------------ | ------------------------------------- |
-| 03b\_TWFE\_HetT10.do  | **Table 2** (main text)        | Presentations/Tables/TWFE\_HetT10.pdf |
-| 03c\_CSDID\_HetT10.do | **Figure 2** (ATT event study) | Presentations/Figures/CSDID\_HetT10.pdf   |
+| 03b\_TWFE\_HetT10.do  | TWFE estimates of High Union Share Industries      | Presentations/Tables/TWFE\_HetT10.pdf |
+| 03c\_CSDID\_HetT10.do | CSDID estimates of High Union Share Industries | Presentations/Figures/CSDID\_HetT10.pdf   |
 
 
 ## Troubleshooting (short FAQ)
