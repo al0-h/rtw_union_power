@@ -22,7 +22,7 @@ log using "$folder/code/Logs/01c_BEA_Extract", replace
 * Import Deflator 
 
 * Download quarterly GDPDEF (2017=100) from FRED
-	//set fredkey 1984e496c0397c8628bd0a928de0f2b7 
+	//set fredkey  
 	// request here API key "https://fred.stlouisfed.org/docs/api/api_key.html."
 	import fred GDPDEF, clear
 

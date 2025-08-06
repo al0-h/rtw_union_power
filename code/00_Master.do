@@ -33,11 +33,21 @@ global tables "$folder/Presentations/Tables"
 cd "$folder"       
 
 
-/* ─────────────────────────────────────────────────────────────────────────── *
- *                              Main Scripts   					               *
- * ─────────────────────────────────────────────────────────────────────────── */
+/* ────────────────────────────────────────────────────────────────────────── *
+ *                              Main Scripts   					              *
+ * ────────────────────────────────────────────────────────────────────────── */
 
-do "Code/01_Clean.do" // blah blah
-do "Code/02_Analysis.do"
+do "Code/01a_Create_CPS_RTW_ind.do"  // Prepares RTW_Years data set for panel data
+
+do "Code/01b_Gen_Appended.do"	// Merges CPS ORG data from 1979-2003
+
+do "Code/02_Processing.do"	// Creates analysis dataset with controls
+
+do "Code/03a_Top_UnionShareInd.do"	// Creates figure with union share pre-rtw
+
+do "Code/03b_TWFE_HetT10.do"	// plots estimates of TWFE of RTW on Union mem of T10 Union Ind
+
+do "Code/03c_CSDID_HetT10.do"	// plots estimates of CSDID of RTW on Union mem of T10 Union Ind
+
 
 
