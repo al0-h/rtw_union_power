@@ -15,6 +15,7 @@
 clear all
 set more off
 version 18.5
+set seed 20250115     
 
 net install scheme-modern, from("https://raw.githubusercontent.com/mdroste/stata-scheme-modern/master/")
 net install grc1leg,from( http://www.stata.com/users/vwiggins/) 
@@ -23,14 +24,12 @@ set scheme modern
 * 	    Paths		 *
 **********************
 
-global folder "/Users/alexanderleon-hernandez/Desktop/rtw_union_power"
-global data "$folder/Data"
-global intm "$folder/Intm"
-global figures "$folder/Presentations/Figures"
-global tables "$folder/Presentations/Tables"
+global data "../Data"
+global intm "../Intm"
+global figures "../Presentations/Figures"
+global tables "../Presentations/Tables"
 
-
-cd "$folder"       
+cd "`c(pwd)'"      
 
 
 /* ────────────────────────────────────────────────────────────────────────── *
